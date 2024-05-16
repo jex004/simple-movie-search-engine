@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 /**
  * Search Engine implementation.
- * 
+ *
  * @author TODO
  * @since  TODO
  */
@@ -19,7 +19,7 @@ public class SearchEngine {
 
     /**
      * Populate BSTrees from a file
-     * 
+     *
      * @param movieTree  - BST to be populated with actors
      * @param studioTree - BST to be populated with studios
      * @param ratingTree - BST to be populated with ratings
@@ -43,8 +43,11 @@ public class SearchEngine {
                 String rating = scanner.nextLine().trim();
                 scanner.nextLine();
 
-                /* TODO */
                 // populate three trees with the information you just read
+                populateTree(movieTree, cast, movie);
+                populateTree(studioTree, studios, movie);
+                populateTree(ratingTree, cast, rating);
+
                 // hint: create a helper function and reuse it to build all three trees
 
             }
@@ -55,29 +58,46 @@ public class SearchEngine {
         return true;
     }
 
+    private static void populateTree(BSTree<String> tree, String[] keys, String data) {
+        for (String key : keys) {
+            tree.insert(key);
+            tree.insertData(key.toLowerCase(), data);
+        }
+    }
+
     /**
      * Search a query in a BST
-     * 
+     *
      * @param searchTree - BST to be searched
      * @param query      - query string
      */
     public static void searchMyQuery(BSTree<String> searchTree, String query) {
 
-        /* TODO */
         // process query
         String[] keys = query.toLowerCase().split(" ");
+        LinkedList<String> documents = null;
 
         // search and output intersection results
         // hint: list's addAll() and retainAll() methods could be helpful
-
+        for (String key : keys) {
+            LinkedList<String> results = searchTree.findDataList(key);
+            if (results == null) {
+                continue;
+            }
+            if (documents == null) {
+                documents = new LinkedList<>(results);
+            } else {
+                documents.retainAll(results);
+            }
+        }
         // search and output individual results
         // hint: list's addAll() and removeAll() methods could be helpful
-
+        print(query, documents);
     }
 
     /**
      * Print output of query
-     * 
+     *
      * @param query     Query used to search tree
      * @param documents Output of documents from query
      */
@@ -94,21 +114,40 @@ public class SearchEngine {
 
     /**
      * Main method that processes and query the given arguments
-     * 
+     *
      * @param args command line arguments
      */
     public static void main(String[] args) {
 
-        /* TODO */
         // initialize search trees
-
+        BSTree<String> movieTree = new BSTree<>();
+        BSTree<String> studioTree = new BSTree<>();
+        BSTree<String> ratingTree = new BSTree<>();
         // process command line arguments
         String fileName = args[0];
         int searchKind = Integer.parseInt(args[1]);
 
         // populate search trees
+        if (populateSearchTrees(movieTree, studioTree, ratingTree, fileName)) {
+            // choose the right tree to query
+            BSTree<String> searchTree;
+            if (searchKind == 0) {
+                searchTree = movieTree;
+            } else if (searchKind == 1) {
+                searchTree = studioTree;
+            } else if (searchKind == 2) {
+                searchTree = ratingTree;
+            } else {
+                return;
+            }
 
-        // choose the right tree to query
+            StringBuilder queryBuilder = new StringBuilder();
+            for (int i = 2; i < args.length; i++) {
+                queryBuilder.append(args[i]).append(" ");
+            }
+            String query = queryBuilder.toString().trim();
 
+            searchMyQuery(searchTree, query);
+        }
     }
 }
