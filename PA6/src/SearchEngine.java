@@ -24,7 +24,7 @@ public class SearchEngine {
      * @param studioTree - BST to be populated with studios
      * @param ratingTree - BST to be populated with ratings
      * @param fileName   - name of the input file
-     * @returns false if file not found, true otherwise
+     * @return false if file not found, true otherwise
      */
     public static boolean populateSearchTrees(
             BSTree<String> movieTree, BSTree<String> studioTree,
@@ -58,6 +58,12 @@ public class SearchEngine {
         return true;
     }
 
+    /**
+     * Populates the tree as the helper method for populateTree
+     * @param tree Tree to be populated
+     * @param keys Keys at which data should be inserted
+     * @param data Data to be inserted
+     */
     private static void populateTree(BSTree<String> tree, String[] keys, String data) {
         for (String key : keys) {
             tree.insert(key);
