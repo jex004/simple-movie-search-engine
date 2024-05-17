@@ -72,27 +72,40 @@ public class SearchEngine {
      * @param query      - query string
      */
     public static void searchMyQuery(BSTree<String> searchTree, String query) {
-
         // process query
         String[] keys = query.toLowerCase().split(" ");
-        LinkedList<String> documents = null;
+        LinkedList<String> intersectionResults = new LinkedList<>();
+        boolean firstKey = true;
 
         // search and output intersection results
         // hint: list's addAll() and retainAll() methods could be helpful
         for (String key : keys) {
-            LinkedList<String> results = searchTree.findDataList(key);
-            if (results == null) {
+            if (!searchTree.findKey(key)) {
                 continue;
             }
-            if (documents == null) {
-                documents = new LinkedList<>(results);
+            LinkedList<String> results = searchTree.findDataList(key);
+            if (firstKey) {
+                intersectionResults.addAll(results);
+                firstKey = false;
             } else {
-                documents.retainAll(results);
+                intersectionResults.retainAll(results);
             }
         }
+        print(query, intersectionResults);
+
         // search and output individual results
         // hint: list's addAll() and removeAll() methods could be helpful
-        print(query, documents);
+        LinkedList<String> printedDocuments = new LinkedList<>(intersectionResults);
+        for (String key : keys) {
+            if (searchTree.findKey(key)) {
+                LinkedList<String> results = searchTree.findDataList(key);
+                results.removeAll(printedDocuments);
+                if (!results.isEmpty()) {
+                    print(key, results);
+                    printedDocuments.addAll(results);
+                }
+            }
+        }
     }
 
     /**

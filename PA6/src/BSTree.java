@@ -8,8 +8,8 @@ import java.util.*;
 /**
  * Binary search tree implementation.
  * 
- * @author TODO
- * @since  TODO
+ * @author Jenny Xu
+ * @since  A17844311
  */
 public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
@@ -20,6 +20,9 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
     /* * * * * BST Node Inner Class * * * * */
 
+    /**
+     * Instantiates BSTNode
+     */
     protected class BSTNode {
 
         T key;
@@ -185,6 +188,12 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         return true;
     }
 
+    /**
+     * Helper function for insert
+     * @param node The node assigned to the key
+     * @param key The key being inserted
+     * @return Returns the node
+     */
     private BSTNode insertHelper(BSTNode node, T key) {
         if (node == null) {
             return new BSTNode(null, null, key);
@@ -212,6 +221,12 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         return findKeyHelper(root, key);
     }
 
+    /**
+     * Helper function of findKey
+     * @param node Node to check
+     * @param key Target key
+     * @return True if key is found, false otherwise
+     */
     private boolean findKeyHelper(BSTNode node, T key) {
         if (node == null) {
             return false;
@@ -245,6 +260,12 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         insertDataHelper(root, key, data);
     }
 
+    /**
+     * Helper function for insertData
+     * @param node Node to insert the data into
+     * @param key Key at which the data should be inserted
+     * @param data Data that should be inserted
+     */
     private void insertDataHelper(BSTNode node, T key, T data) {
         if (node == null) {
             return;
@@ -279,6 +300,12 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         return dataList;
     }
 
+    /**
+     * Helper function for findDataList
+     * @param node A node to check
+     * @param key Target key
+     * @return Returns the data list
+     */
     private LinkedList<T> findDataListHelper(BSTNode node, T key) {
         if (node == null) {
             return null;
@@ -320,6 +347,9 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
     /* * * * * BST Iterator * * * * */
 
+    /**
+     * Instantiates the iterator
+     */
     public class BSTree_Iterator implements Iterator<T> {
         Stack<BSTNode> stack;
         public BSTree_Iterator() {
@@ -331,10 +361,18 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
             }
         }
 
+        /**
+         * Checks if the stack is empty
+         * @return Returns true if the stack is empty; Returns false otherwise
+         */
         public boolean hasNext() {
             return !stack.isEmpty();
         }
 
+        /**
+         * Pops the next node in the stack
+         * @return Returns the next node in the stack
+         */
         public T next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
@@ -349,6 +387,10 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         }
     }
 
+    /**
+     * Method to create a new iterator
+     * @return Returns a new iterator
+     */
     public Iterator<T> iterator() {
         return new BSTree_Iterator();
     }
