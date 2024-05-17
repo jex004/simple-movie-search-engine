@@ -173,8 +173,9 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
     /**
      * Insert a key into BST
      * 
-     * @param key
+     * @param key Key to insert
      * @return true if insertion is successful and false otherwise
+     * @throws NullPointerException Throws an exception if key is null
      */
     public boolean insert(T key) {
         if (key == null) {
@@ -352,6 +353,9 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
      */
     public class BSTree_Iterator implements Iterator<T> {
         Stack<BSTNode> stack;
+        /**
+         * Instantiates BSTree_Iterator
+         */
         public BSTree_Iterator() {
             stack = new Stack<>();
             BSTNode node = root;
@@ -372,6 +376,7 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         /**
          * Pops the next node in the stack
          * @return Returns the next node in the stack
+         * @throws NoSuchElementException Throws an exception if stack is empty
          */
         public T next() {
             if (!hasNext()) {
@@ -395,15 +400,15 @@ public class BSTree<T extends Comparable<? super T>> implements Iterable {
         return new BSTree_Iterator();
     }
 
-    /* * * * * Extra Credit Methods * * * * */
-
-    public ArrayList<T> intersection(Iterator<T> iter1, Iterator<T> iter2) {
-        /* TODO */
-        return null;
-    }
-
-    public T levelMax(int level) {
-        /* TODO */
-        return null;
-    }
+//    /* * * * * Extra Credit Methods * * * * */
+//
+//    public ArrayList<T> intersection(Iterator<T> iter1, Iterator<T> iter2) {
+//        /* TODO */
+//        return null;
+//    }
+//
+//    public T levelMax(int level) {
+//        /* TODO */
+//        return null;
+//    }
 }
