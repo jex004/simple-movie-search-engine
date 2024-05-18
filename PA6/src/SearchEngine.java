@@ -81,35 +81,35 @@ public class SearchEngine {
         // process query
         String[] keys = query.toLowerCase().split(" ");
         LinkedList<String> intersectionResults = new LinkedList<>();
-        boolean firstKey = true;
 
         // search and output intersection results
         // hint: list's addAll() and retainAll() methods could be helpful
-        for (String key : keys) {
-            if (!searchTree.findKey(key)) {
-                continue;
+        if (keys.length > 1) {
+            if (searchTree.findKey(keys[0])) {
+                intersectionResults.addAll(searchTree.findDataList(keys[0]));
             }
-            LinkedList<String> results = searchTree.findDataList(key);
-            if (firstKey) {
-                intersectionResults.addAll(results);
-                firstKey = false;
-            } else {
-                intersectionResults.retainAll(results);
+            for (String key : keys) {
+                if (searchTree.findKey(key)) {
+                    intersectionResults.retainAll(searchTree.findDataList(key));
+                }
             }
+            print(query, intersectionResults);
         }
-        print(query, intersectionResults);
+
 
         // search and output individual results
         // hint: list's addAll() and removeAll() methods could be helpful
-        LinkedList<String> printedDocuments = new LinkedList<>(intersectionResults);
-        for (String key : keys) {
+        for (String key: keys) {
             if (searchTree.findKey(key)) {
-                LinkedList<String> results = searchTree.findDataList(key);
-                results.removeAll(printedDocuments);
-                if (!results.isEmpty()) {
-                    print(key, results);
-                    printedDocuments.addAll(results);
+                LinkedList<String> singleResults = searchTree.findDataList(key);
+                singleResults.removeAll(intersectionResults);
+                intersectionResults.addAll(singleResults);
+                if (!intersectionResults.isEmpty() && singleResults.isEmpty()) {
+                    continue;
                 }
+                print(key, singleResults);
+            } else {
+                print(key, null);
             }
         }
     }
