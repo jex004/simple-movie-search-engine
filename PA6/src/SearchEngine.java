@@ -66,8 +66,12 @@ public class SearchEngine {
      */
     private static void populateTree(BSTree<String> tree, String[] keys, String data) {
         for (String key : keys) {
-            tree.insert(key);
-            tree.insertData(key.toLowerCase(), data);
+            if (!tree.findKey(key)) {
+                tree.insert(key.toLowerCase());
+            }
+            if (!tree.findDataList(key).contains(data)) {
+                tree.insertData(key, data);
+            }
         }
     }
 

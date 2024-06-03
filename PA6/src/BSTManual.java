@@ -71,7 +71,7 @@ public static ArrayList<String>  traversals() {
 	 * 
 	 * replace "1, 2, 3, 4, 5" with your actual answers
 	 */
-	answer_pr3.add("4, 19, 22, 28, 39, 56, 64, 68, 93, 95, 96, 98, 97");
+	answer_pr3.add("4, 19, 22, 28, 39, 56, 64, 68, 93, 95, 96, 97, 98");
 	answer_pr3.add("39, 19, 4, 22, 28, 93, 64, 56, 68, 96, 95, 98, 97");
 	answer_pr3.add("4, 28, 22, 19, 56, 68, 64, 95, 97, 98, 96, 93, 39");
 	return answer_pr3;
